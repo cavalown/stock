@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import sys
 sys.path.append(r'/home/cavalown/stock_project')
 
@@ -10,6 +11,18 @@ yaml_file_path = '/home/cavalown/.credential/.db.yaml'
 steps:
 
 """
+=======
+# import sys
+# sys.path.append(r'/home/cavalown/stock_project/stock')
+
+import pymongo
+from pymongo.errors import DuplicateKeyError
+
+from read_file import read_yaml as ryaml
+
+yaml_file_path = '/Users/huangyiling/python_work/side_project/credential/.db.yaml'
+
+>>>>>>> 92f675d74971e9546a619a610be4d01036a557ae
 
 '''
 mongodb://username:password@host:port/dbname
@@ -62,18 +75,53 @@ def create_collection(mongo_client, database, collection_name):
         return mongo_client[database][collection_name]
     else:
         print('***', collection_name, 'already exists in', database)
+<<<<<<< HEAD
         return
+=======
+        return mongo_client[database][collection_name]
+>>>>>>> 92f675d74971e9546a619a610be4d01036a557ae
 
 
 # Insert a document to collection
 def insert_document(collection, document_dict):
+<<<<<<< HEAD
     insert_obj = collection.insert_one(document_dict)
     print('>> Insert success!')
     return insert_obj.inserted_id
+=======
+    try:
+        collection.insert_one(document_dict)
+        print('>> Insert success!')
+    except DuplicateKeyError:
+        print('This document already exists!')
+    return
+
+
+# Find one from mongo
+def find_one_mongo(collection):
+    content = collection.find_one()
+    return content
+
+
+# Find all from mongo
+def find_all_mongo(collection):
+    contents = collection.find()
+    return contents
+
+
+# Find some fields from mongo
+def find_some_fields_mongo(collection, columns_list):
+    projection = dict()
+    for i in columns_list:
+        projection[i] = 1
+    contents = collection.find({}, projection)
+    return contents
+>>>>>>> 92f675d74971e9546a619a610be4d01036a557ae
 
 
 if __name__ == '__main__':
     mongo_client = mongo_connection('linode1', 'mongo')
+<<<<<<< HEAD
     # coll_stockIndustry = mongo_collection(mongo_client, 'stocks', 'stockIndustry')
     # create_database(mongo_client, 'stocks')
     # create_collection(mongo_client, 'stocks', 'stock2330')
@@ -81,3 +129,10 @@ if __name__ == '__main__':
     # db = create_database(mongo_client, 'test_db')
     # test_coll = create_collection(mongo_client, db, 'test_collection')
     # insert_document(test_coll, doc)
+=======
+    coll_stockIndustry = mongo_collection(mongo_client, 'stocks', 'stockIndustry')
+    contents = find_some_fields_mongo(coll_stockIndustry, ['stocks_list'])
+    for i in contents:
+        print(i['stocks_list'])
+        break
+>>>>>>> 92f675d74971e9546a619a610be4d01036a557ae

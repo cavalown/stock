@@ -1,10 +1,19 @@
+<<<<<<< HEAD
 import sys
 sys.path.append(r'/home/cavalown/stock_project')
+=======
+# import sys
+# sys.path.append(r'/home/cavalown/stock_project/stock')
+>>>>>>> 92f675d74971e9546a619a610be4d01036a557ae
 
 import psycopg2
 from read_file import read_yaml as ryaml
 
+<<<<<<< HEAD
 yaml_file_path = '/home/cavalown/.credential/.db.yaml'
+=======
+yaml_file_path = '/Users/huangyiling/python_work/python_DB_env/credential/.db.yaml'
+>>>>>>> 92f675d74971e9546a619a610be4d01036a557ae
 
 """
 steps:

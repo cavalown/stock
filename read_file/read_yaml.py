@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import sys
 sys.path.append(r'/home/cavalown/stock_project')
+=======
+# import sys
+# sys.path.append(r'/home/cavalown/stock_project/stock')
+>>>>>>> 92f675d74971e9546a619a610be4d01036a557ae
 import yaml
 
 
