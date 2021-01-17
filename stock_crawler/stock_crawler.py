@@ -40,7 +40,11 @@ def stock_crawler(stock_ids_list):
                         high = float(df.iat[index, 4])  # 最高價
                         low = float(df.iat[index, 5])  # 最低價
                         close_ = float(df.iat[index, 6])  # 收盤價
-                        change = float(df.iat[index, 7])  # 高低價差
+                        change_ori = df.iat[index, 7]  # 高低價差
+                        if change_ori == 'X0.00':
+                            change = float(0.00)
+                        else:
+                            change = float(change_ori)
                         trades = int(df.iat[index, 8])  # 成交筆數
                         doc = {'_id': stock_id + date_ad,
                                'trade_date': date_ad,
