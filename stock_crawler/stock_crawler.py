@@ -35,12 +35,12 @@ def stock_crawler(stock_ids_list):
                         date = df.iat[index, 0]  # 交易日
                         date_ad = str(1911 + int(date.split('/')[0])) + ''.join(date.split('/')[1:])
                         volume = int(df.iat[index, 1])  # 交易量(股數)
-                        price = int(df.iat[index, 2])  # 成交金額
-                        open_ = int(df.iat[index, 3])  # 開盤價
-                        high = int(df.iat[index, 4])  # 最高價
-                        low = int(df.iat[index, 5])  # 最低價
-                        close_ = int(df.iat[index, 6])  # 收盤價
-                        change = int(df.iat[index, 7])  # 高低價差
+                        price = float(df.iat[index, 2])  # 成交金額
+                        open_ = float(df.iat[index, 3])  # 開盤價
+                        high = float(df.iat[index, 4])  # 最高價
+                        low = float(df.iat[index, 5])  # 最低價
+                        close_ = float(df.iat[index, 6])  # 收盤價
+                        change = float(df.iat[index, 7])  # 高低價差
                         trades = int(df.iat[index, 8])  # 成交筆數
                         doc = {'_id': stock_id + date_ad,
                                'trade_date': date_ad,
