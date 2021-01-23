@@ -1,0 +1,7 @@
+bs4
+flask
+pymongo
+psycopg2-binary
+pandas
+numpy
+pyyaml
