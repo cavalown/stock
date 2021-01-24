@@ -21,6 +21,6 @@ def count_url_check():
 
 
 if __name__ == '__main__':
-    # count_stocks()
+    count_stocks()
     # stocks_count : 938
     count_url_check()
