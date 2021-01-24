@@ -24,3 +24,5 @@ if __name__ == '__main__':
     count_stocks()
     # stocks_count : 938
     count_url_check()
+    # Expected: 123816
+    # Reality: 123816

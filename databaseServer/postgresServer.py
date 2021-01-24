@@ -4,7 +4,8 @@
 import psycopg2
 from read_file import read_yaml as ryaml
 
-credential_path = '/Users/huangyiling/.credential/.db.yaml'
+credential_path = '/Users/huangyiling/.credential/.db.yaml'  # mbp
+# credential_path = '/home/cavalown/.credential/.db.yaml'  # linode
 
 """
 steps:
