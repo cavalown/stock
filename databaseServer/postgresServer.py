@@ -4,7 +4,7 @@
 import psycopg2
 from read_file import read_yaml as ryaml
 
-yaml_file_path = '/Users/huangyiling/python_work/python_DB_env/credential/.db.yaml'
+credential_path = '/Users/huangyiling/.credential/.db.yaml'
 
 """
 steps:
@@ -15,9 +15,9 @@ steps:
 """
 
 
-def postgres_connection(db_name):
-    db_yaml = ryaml.read_yaml(yaml_file_path)
-    db_info = db_yaml[db_name]
+def postgres_connection(machine, db_class):
+    credential = ryaml.read_yaml(credential_path)
+    db_info = credential[machine][db_class]
     host = db_info['host']
     port = db_info['port']
     db = db_info['db']
