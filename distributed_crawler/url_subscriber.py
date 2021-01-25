@@ -27,7 +27,9 @@ def subscribe_urls():
             documents = crawler.crawler(url)
             print(documents)
             coll_stock = mongo.mongo_collection(client, 'stocks', f"stock{stock_id}")
-            coll_stock.insert_many(documents)  # 記錄爬取的股票資料，一次單股一個月的資料
+            for item in documents:
+                mongo.insert_document(coll_stock, item)
+            # mongo.insert_many_document(coll_stock, documents)  # 記錄爬取的股票資料，一次單股一個月的資料
             coll_crawlerURL.update_one({'_id': url_id}, {'$set': {'crawlerStatus': 2}})  # 更新crawlerURL的狀態，2表示爬取完成
             redis.redis_delete_key(redisConnect, key)  # 取出url就從redis刪掉
             time.sleep(10)

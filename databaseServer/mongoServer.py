@@ -73,6 +73,17 @@ def insert_document(collection, document_dict):
     return
 
 
+def insert_many_document(collection, documents_list):
+    try:
+        collection.insert_many(documents_list)
+        print('>> Insert success!')
+    # except DuplicateKeyError:
+    #     print('This document already exists!')
+    except pymongo.errors.BulkWriteError:
+        print('Some document already exist!')
+    return
+
+
 # Find one from mongo
 def find_one_mongo(collection):
     content = collection.find_one()
@@ -96,8 +107,7 @@ def find_some_fields_mongo(collection, columns_list):
 
 if __name__ == '__main__':
     mongo_client = mongo_connection('linode1', 'mongo')
-    coll_stockIndustry = mongo_collection(mongo_client, 'stocks', 'stockIndustry')
-    contents = find_some_fields_mongo(coll_stockIndustry, ['stocks_list'])
-    for i in contents:
-        print(i['stocks_list'])
-        break
+    coll = mongo_collection(mongo_client, 'test', 'firstColl')
+    docs = [{'_id':'0003', 'name':'John'},
+            {'_id': '0004', 'name': 'Jenny'}]
+    insert_many_document(coll, docs)

@@ -6,3 +6,5 @@ pandas
 numpy
 pyyaml
 redis
+wheel
+requests
