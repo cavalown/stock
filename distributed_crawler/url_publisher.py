@@ -23,5 +23,6 @@ def publish_urls():
 
 
 if __name__ == '__main__':
-    redis_data = publish_urls()
-    print(redis_data)
+    while True:
+        redis_data = publish_urls()
+        # print(redis_data)

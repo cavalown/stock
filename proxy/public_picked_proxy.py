@@ -1,22 +1,27 @@
 from databaseServer import mongoServer as mongo
 import requests
+from databaseServer import redisServer as redis
+
+"""
+In proxy public-subscribe system, use db=1 in redis
+"""
 
 
 def pick_proxy(amount=10):
-    prixy_list = []
     client = mongo.mongo_connection('linode1', 'mongo')
     collection = mongo.mongo_collection(client, 'proxy', 'proxyPool_1')
     contents = collection.find({}, {'ip': 1, 'port': 1}).limit(amount)
+    redisConnect = redis.redis_connection('linode1', 'redis', db=1)  # proxy use db=1
     for item in contents:
         proxy = item['ip'] + ':' + item['port']
         try:
             validate_proxy(proxy)
-            prixy_list.append(proxy)
+            for index in range(1, 11):
+                key = f'proxy{index}'
+                if not redisConnect.exists(key):
+                    redis.redis_set_key_value(redisConnect, key, proxy)
         except Exception:
             pass
-    if len(prixy_list) < 10:
-        pick_proxy(10 - len(prixy_list))
-    return prixy_list
 
 
 def validate_proxy(proxy):
@@ -29,5 +34,5 @@ def validate_proxy(proxy):
 
 
 if __name__ == '__main__':
-    proxies = pick_proxy()
-    print(proxies)
+    while True:
+        pick_proxy()
