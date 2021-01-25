@@ -1,29 +1,33 @@
+import sys
+sys.path.append(r'/home/cavalown/stock_project/stock')
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-from databaseServer import mongoServer as mongo
 from databaseServer import redisServer as redis
 import random
+import time
 
 headers = {
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36'}
+    'user-agent': 'Googlebot'}
 
 
 def get_proxies():
     connect = redis.redis_connection('linode1', 'redis', db=1)
-    key = f'proxy{random.randint(1, 10)}'
+    key = f'proxy{random.randint(1, 20)}'
     content = redis.redis_get_value(connect, key)
-    redis.redis_delete_key(key)
+    redis.redis_delete_key(connect, key)
     return content
 
 
 def crawler(url):
-    picked_proxy = get_proxies()
-    proxies = {'http': picked_proxy,
-               'https': picked_proxy}
+    # picked_proxy = get_proxies()
+    # print(picked_proxy)
+    # proxies = {'http': 'http://'+picked_proxy,
+    #            'https': 'https://'+picked_proxy}
     try:
         stock_id = url.split('stockNo=')[-1]
-        res = requests.get(url, headers=headers, timeout=8, proxiex=proxies)
+        res = requests.get(url, headers=headers, timeout=8)#, proxiex=proxies)
         soup = BeautifulSoup(res.text, "lxml")
         table = soup.find_all('table')[0]
         df = pd.read_html(str(table))[0]
@@ -53,8 +57,9 @@ def crawler(url):
             documents.append(document)
             return documents
     except Exception:
-        crawler()
+        time.sleep(10)
+        crawler(url)
 
 
 if __name__ == '__main__':
-    crawler()
+    crawler('https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=html&date=20170401&stockNo=1101')

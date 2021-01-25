@@ -7,7 +7,6 @@ stock_id|datetime|category
 """
 
 import twstock
-import pandas
 
 
 # 股票歷史資料查詢

@@ -1,8 +1,11 @@
+import sys
+sys.path.append(r'/home/cavalown/stock_project/stock')
+
 import redis
 from read_file import read_yaml as ryaml
 
-credential_path = '/Users/huangyiling/.credential/.db.yaml'  # mbp
-# credential_path = '/home/cavalown/.credential/.db.yaml'  # linode
+# credential_path = '/Users/huangyiling/.credential/.db.yaml'  # mbp
+credential_path = '/home/cavalown/.credential/.db.yaml'  # linode
 
 """
 redis has 16 dbs: 0-15

@@ -1,3 +1,6 @@
+import sys
+sys.path.append(r'/home/cavalown/stock_project/stock')
+
 from databaseServer import mongoServer as mongo
 import requests
 from databaseServer import redisServer as redis
@@ -16,7 +19,7 @@ def pick_proxy(amount=10):
         proxy = item['ip'] + ':' + item['port']
         try:
             validate_proxy(proxy)
-            for index in range(1, 11):
+            for index in range(1, 21):
                 key = f'proxy{index}'
                 if not redisConnect.exists(key):
                     redis.redis_set_key_value(redisConnect, key, proxy)
