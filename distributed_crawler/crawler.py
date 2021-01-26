@@ -55,7 +55,7 @@ def crawler(url):
                         'change': change,
                         'trades': trades}
             documents.append(document)
-            return documents
+        return documents
     except Exception:
         time.sleep(10)
         crawler(url)

@@ -1,5 +1,5 @@
-import sys
-sys.path.append(r'/home/cavalown/stock_project/stock')
+# import sys
+# sys.path.append(r'/home/cavalown/stock_project/stock')
 
 from databaseServer import mongoServer as mongo
 from databaseServer import redisServer as redis
@@ -39,5 +39,4 @@ def publish_urls():
 
 if __name__ == '__main__':
     while True:
-        redis_data = publish_urls()
-        # print(redis_data)
+        publish_urls()

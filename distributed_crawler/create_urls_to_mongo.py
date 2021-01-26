@@ -20,7 +20,7 @@ def create_urls(stock_ids):
     for stock_id in stock_ids:
         for year in year_list:
             for month in month_list:
-                url = f'https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=html&date={year + month.zfill(2)}04&stockNo={stock_id}'
+                url = f'https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=html&date={year + month.zfill(2)}01&stockNo={stock_id}'
                 doc = {'_id': stock_id + year + month.zfill(2), 'url': url, 'crawlerStatus': 0}
                 mongo.insert_document(mongoCollection, doc)
 
