@@ -1,10 +1,10 @@
-from databaseServer import mongoServer as mongo
+from myPackage import mongoServer as mon
 
 
 def count_stocks():
     stock_count = 0
-    client = mongo.mongo_connection('linode1', 'mongo')
-    collection = mongo.mongo_collection(client, 'stocks', 'stockIndustry')
+    client = mon.mongo_connection('linode1', 'mongo')
+    collection = mon.mongo_collection(client, 'stocks', 'stockIndustry')
     contents = collection.find({}, {'stocks_count': 1})
     for item in contents:
         id_list_count = item['stocks_count']
@@ -14,7 +14,7 @@ def count_stocks():
 
 def count_url_check():
     expected_count = 938 * 11 * 12
-    collection = mongo.mongo_collection(mongo.mongo_connection('linode1', 'mongo'), 'stocks', 'crawlerURL')
+    collection = mon.mongo_collection(mon.mongo_connection('linode1', 'mongo'), 'stocks', 'crawlerURL')
     # reality_count = collection.find({}).count()
     reality_count = collection.count_documents
     print("Expected :", expected_count)

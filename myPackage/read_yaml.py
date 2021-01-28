@@ -8,7 +8,7 @@ def read_yaml(file_path):
 
 
 if __name__ == '__main__':
-    file_path = '/Users/huangyiling/python_work/python_DB_env/credential/.db.yaml'
+    file_path = '/Users/huangyiling/credential/db.yaml'
     contebts = read_yaml(file_path)
-    cn_host = contebts['postgres']['host']
+    cn_host = contebts['linode1']['postgres']['host']
     print(cn_host)

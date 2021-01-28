@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from databaseServer import mongoServer as mongo
+from myPackage import mongoServer as mon
 import time
 
 industry_kv = {'水泥': 'cement', '食品': 'food', '塑膠': 'plastic', '紡織': 'textile', '電機': 'motor',
@@ -54,9 +54,9 @@ def industry_crawler():
                'stocks_count': len(stock_list),
                'stocks': stock_dict}
         # print(doc)
-        mongo_client = mongo.mongo_connection('linode1', 'mongo')
-        mongo_collection = mongo.mongo_collection(mongo_client, 'stocks', 'stockIndustry')
-        mongo.insert_document(mongo_collection, doc)
+        mongo_client = mon.mongo_connection('linode1', 'mongo')
+        mongo_collection = mon.mongo_collection(mongo_client, 'stocks', 'stockIndustry')
+        mon.insert_document(mongo_collection, doc)
         time.sleep(20)
 
 

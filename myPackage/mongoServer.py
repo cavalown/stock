@@ -1,7 +1,6 @@
 import pymongo
 from pymongo.errors import DuplicateKeyError
-
-from read_file import read_yaml as ryaml
+from myPackage import read_yaml as ryaml
 
 # credential_path = '/Users/huangyiling/.credential/.db.yaml'  # mbp
 credential_path = '/Users/huangyiling/credential/db.yaml'  # linode

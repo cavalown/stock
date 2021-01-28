@@ -2,25 +2,25 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
-from databaseServer import mongoServer as mongo
+from myPackage import mongoServer as mon
 
 headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36'}
 
 
 def get_stock_ids():
-    mongo_client = mongo.mongo_connection('linode1', 'mongo')
-    coll_stockIndustry = mongo.mongo_collection(mongo_client, 'stocks', 'stockIndustry')
-    contents = mongo.find_some_fields_mongo(coll_stockIndustry, ['stocks_list'])
+    mongo_client = mon.mongo_connection('linode1', 'mongo')
+    coll_stockIndustry = mon.mongo_collection(mongo_client, 'stocks', 'stockIndustry')
+    contents = mon.find_some_fields_mongo(coll_stockIndustry, ['stocks_list'])
     return contents
 
 
 def stock_crawler(stock_ids_list):
     for stocks in stock_ids_list:
         stock_ids = stocks['stocks_list']
-        client = mongo.mongo_connection('linode1', 'mongo')
+        client = mon.mongo_connection('linode1', 'mongo')
         for stock_id in stock_ids:
-            collection = mongo.create_collection(client, 'stocks', f'stock{stock_id}')
+            collection = mon.create_collection(client, 'stocks', f'stock{stock_id}')
             for year in range(10, 21):
                 for month in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']:
                     stock_url = f"https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=html&date=20{str(year)}{month}01&stockNo={stock_id}"
@@ -54,7 +54,7 @@ def stock_crawler(stock_ids_list):
                                'change': change,
                                'trades': trades}
                         print(doc)
-                        mongo.insert_document(collection, doc)
+                        mon.insert_document(collection, doc)
                     # df.to_csv(f'/Users/huangyiling/Desktop/stock/2330/stock{stock_id}_20{str(i)}{j}.csv')
                     time.sleep(20)
                 time.sleep(60)

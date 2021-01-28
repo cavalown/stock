@@ -1,8 +1,7 @@
 import redis
-from read_file import read_yaml as ryaml
+from myPackage import read_yaml as ryaml
 
-# credential_path = '/Users/huangyiling/.credential/.db.yaml'  # mbp
-credential_path = '/Users/huangyiling/credential/db.yaml'  # linode
+credential_path = '/Users/huangyiling/credential/db.yaml'
 
 """
 redis has 16 dbs: 0-15
@@ -43,19 +42,5 @@ def redis_get_all_kv(connection):
 
 if __name__ == '__main__':
     redisConnection = redis_connection('linode1', 'redis', db=0)
-    # redis_set_key_value(redisConnection, 'RRR', 'rrr')
-    # value = redis_get_value(redisConnection, 'QOO')
-    # print(value)
-    # contents = redis_get_all_kv(redisConnection)
-    # print(contents)
-    # redis_delete_key(redisConnection, 'ip1')
-    # redis_delete_key(redisConnection, 'ip5')
-    # redis_delete_key(redisConnection, 'ip3')
-    # contents = redis_get_all_kv(redisConnection)
-    # print(contents)
-    # ex = redisConnection.exists('RRR')
-    # print(ex)
     redisConnection.flushall() # delete all
-    # contents = redis_get_all_kv(redisConnection)
-    # print(contents)
 
