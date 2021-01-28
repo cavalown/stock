@@ -1,9 +1,9 @@
 import pymongo
 from pymongo.errors import DuplicateKeyError
-from myPackage import read_yaml as ryaml
+# from myPackage import read_yaml as ryaml
+import myPackage.read_yaml as ryaml
 
-# credential_path = '/Users/huangyiling/.credential/.db.yaml'  # mbp
-credential_path = '/Users/huangyiling/credential/db.yaml'  # linode
+credential_path = 'credential/db.yaml'
 
 '''
 mongodb://username:password@host:port/dbname
@@ -104,6 +104,6 @@ def find_some_fields_mongo(collection, columns_list):
 if __name__ == '__main__':
     mongo_client = mongo_connection('linode1', 'mongo')
     coll = mongo_collection(mongo_client, 'test', 'firstColl')
-    docs = [{'_id':'0003', 'name':'John'},
-            {'_id': '0004', 'name': 'Jenny'}]
-    insert_many_document(coll, docs)
+    content = find_all_mongo(coll)
+    for item in content:
+        print(item)

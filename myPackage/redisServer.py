@@ -1,7 +1,8 @@
+import re
 import redis
 from myPackage import read_yaml as ryaml
 
-credential_path = '/Users/huangyiling/credential/db.yaml'
+credential_path = 'credential/db.yaml'
 
 """
 redis has 16 dbs: 0-15
@@ -38,6 +39,11 @@ def redis_delete_key(connection, key):
 def redis_get_all_kv(connection):
     contents = connection.keys()
     return contents
+
+def flush_all_in_one_db(connection):
+    connection.flushall()
+    print('Flush done.')
+    return redis_get_all_kv(connection)
 
 
 if __name__ == '__main__':
