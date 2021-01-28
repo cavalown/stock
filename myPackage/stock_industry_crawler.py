@@ -1,6 +1,3 @@
-import sys
-sys.path.append(r'/home/cavalown/stock_project/stock')
-
 import requests
 from bs4 import BeautifulSoup
 from databaseServer import mongoServer as mongo

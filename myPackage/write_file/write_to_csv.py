@@ -1,7 +1,3 @@
-import sys
-
-sys.path.append(r'/home/cavalown/stock_project/stock')
-
 import datetime
 import csv
 
