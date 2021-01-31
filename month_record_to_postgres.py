@@ -10,7 +10,7 @@ def get_month_record_mongo(collection_name, year, month):
     return contents
 
 def season_record_mongo(collection_name, year, season):
-    if season = 1
+    if season == 1
     return
 
 def get_year_record_mongo(collection_name, year):
