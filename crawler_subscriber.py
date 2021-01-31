@@ -1,13 +1,14 @@
+import os
+import time
 from re import T
 from typing import Counter
+
 from pymongo.uri_parser import parse_uri
+
+from myPackage import crawler
 from myPackage import mongoServer as mon
 from myPackage import redisServer as red
-from myPackage import crawler
-import random
-import time
 from myPackage import write_to_csv as wcsv
-import os
 
 """
 In url public-subscribe system, use db=0 in redis
@@ -22,15 +23,16 @@ def main():  # index:0-3
         # get keys and values from mongo
         keys = red.redis_get_all_kv(redisConnect)
         for key in keys:
-            amount = int(os.environ.get("amount")) # amount of subscriber
-            index = int(os.environ.get("index")) # subscriber num
-            num = int(key.split('No_')[-1]) # redis key
+            amount = int(os.environ.get("amount"))  # amount of subscriber
+            index = int(os.environ.get("index"))  # subscriber num
+            num = int(key.split('No_')[-1])  # redis key
             # 決定subscriber要取用哪筆資料
             if num % int(amount) == int(index):
                 stock_id = red.redis_get_value(redisConnect, key)
                 print(f"get stock {stock_id}")
                 red.redis_delete_key(redisConnect, key)  # 取出url就從redis刪掉
-                coll_stock = mon.mongo_collection(client, 'stocks', f"stock{stock_id}")
+                coll_stock = mon.mongo_collection(
+                    client, 'stocks', f"stock{stock_id}")
                 for year in range(2010, 2021):
                     for month in range(1, 13):
                         m_retry = 0
@@ -51,8 +53,9 @@ def main():  # index:0-3
                                 print(e)
                                 time.sleep(10)
                                 m_retry += 1
-                                if m_retry ==3:
-                                    wcsv.writeToCsv('CrawlerException', [stock_id, year, month])
+                                if m_retry == 3:
+                                    wcsv.writeToCsv('CrawlerException', [
+                                                    stock_id, year, month])
                                 continue
                     coll_stockInfo.update_one(
                         {'_id': stock_id}, {'$set': {'yearStatus': year}})  # 當年爬完
