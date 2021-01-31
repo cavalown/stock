@@ -14,7 +14,7 @@ In url public-subscribe system, use db=0 in redis
 """
 
 
-def main():  # index:0-4
+def main():  # index:0-3
     redisConnect = red.redis_connection('linode1', 'redis', db=0)
     client = mon.mongo_connection('linode1', 'mongo')
     coll_stockInfo = mon.mongo_collection(client, 'stocks', 'stockInfo')
@@ -22,9 +22,9 @@ def main():  # index:0-4
         # get keys and values from mongo
         keys = red.redis_get_all_kv(redisConnect)
         for key in keys:
-            amount = int(os.environ.get("amount"))
-            index = int(os.environ.get("index"))
-            num = int(key.split('No_')[-1])
+            amount = int(os.environ.get("amount")) # amount of subscriber
+            index = int(os.environ.get("index")) # subscriber num
+            num = int(key.split('No_')[-1]) # redis key
             # 決定subscriber要取用哪筆資料
             if num % int(amount) == int(index):
                 stock_id = red.redis_get_value(redisConnect, key)
