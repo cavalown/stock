@@ -9,4 +9,5 @@ redis
 wheel
 requests
 lxml
+httplib2
 
