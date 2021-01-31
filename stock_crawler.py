@@ -57,8 +57,6 @@ def stock_crawler(stock_ids_list):
                         mon.insert_document(collection, doc)
                     # df.to_csv(f'/Users/huangyiling/Desktop/stock/2330/stock{stock_id}_20{str(i)}{j}.csv')
                     time.sleep(20)
-                time.sleep(60)
-            time.sleep(300)
 
 
 if __name__ == '__main__':

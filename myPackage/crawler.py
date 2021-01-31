@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+from yaml.tokens import FlowSequenceEndToken
 from myPackage import redisServer as red
 import random
 import time
@@ -18,17 +19,18 @@ def get_proxies():
 
 
 def digit_check(item:str):
-    if item.isdigit():
-        return float(item)
-    return item
-
-def change_check(item:str):
     # float(0.00) if change_ori == 'X0.00' else float(change_ori)
-    if item.isdigit():
-        return float(item)
-    elif item in ['X0.00', 'x0.00']:
+    if item in ['X0.00', 'x0.00']:
         return float(0.00)
-    return item
+    elif len(item.split('.')) >1:
+        left = item.split('.')[0]
+        right = item.split('.')[1]
+        if left.isdigit() and right.isdigit():
+            return float(item)
+    elif item.isdigit():
+        return float(item)
+    else:
+        return item
 
 def crawler(url):
     # picked_proxy = get_proxies()
@@ -45,16 +47,20 @@ def crawler(url):
         for index in range(len(df)):
             date = df.iat[index, 0]  # 交易日
             date_ad = str(1911 + int(date.split('/')[0])) + ''.join(date.split('/')[1:])
+            year = date_ad[:4]
+            month = date_ad[4:6]
             volume = digit_check(str(df.iat[index, 1]))  # 交易量(股數)
             price = digit_check(str(df.iat[index, 2]))  # 成交金額
             open_ = digit_check(str(df.iat[index, 3]))  # 開盤價
             high = digit_check(str(df.iat[index, 4]))  # 最高價
             low = digit_check(str(df.iat[index, 5]))  # 最低價
             close_ = digit_check(str(df.iat[index, 6]))  # 收盤價
-            change = change_check(str(df.iat[index, 7]))  # 高低價差
+            change = digit_check(str(df.iat[index, 7]))  # 高低價差
             trades = digit_check(str(df.iat[index, 8]))  # 成交筆數
             document = {'_id': stock_id + date_ad,
                         'trade_date': date_ad,
+                        'year':year,
+                        'month':month,
                         'volume': volume,
                         'price': price,
                         'open': open_,
@@ -72,4 +78,5 @@ def crawler(url):
 
 
 if __name__ == '__main__':
-    crawler('https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=html&date=20170401&stockNo=1101')
+    doc = crawler('https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=html&date=20140301&stockNo=1101')
+    print(doc)

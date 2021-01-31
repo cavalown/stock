@@ -19,7 +19,8 @@ def mongo_connection(machine, db_class):
     dbName = db_info['database']
     user = db_info['user']
     password = db_info['pswd']
-    client = pymongo.MongoClient('mongodb://{}:{}@{}:{}/{}'.format(user, password, host, port, dbName))
+    client = pymongo.MongoClient(
+        'mongodb://{}:{}@{}:{}/{}'.format(user, password, host, port, dbName))
     print('Success connecting to client!')
     return client
 
@@ -99,6 +100,12 @@ def find_some_fields_mongo(collection, columns_list):
         projection[i] = 1
     contents = collection.find({}, projection)
     return contents
+
+
+# def aggregate(collection, pipline):
+#     pipeline = [{'$match':{'price':{'$gte':50}}},
+#         {'$group': {'_id': "$fName", 'avg': {'$avg': '$price'}}},]
+#     return
 
 
 if __name__ == '__main__':
