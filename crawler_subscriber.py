@@ -1,6 +1,5 @@
 import os
 import time
-from re import T
 from typing import Counter
 
 from pymongo.uri_parser import parse_uri
@@ -15,7 +14,7 @@ In url public-subscribe system, use db=0 in redis
 """
 
 
-def main():  # index:0-3
+def main():  # redis subscriber index:0-3
     redisConnect = red.redis_connection('linode1', 'redis', db=0)
     client = mon.mongo_connection('linode1', 'mongo')
     coll_stockInfo = mon.mongo_collection(client, 'stocks', 'stockInfo')
@@ -34,29 +33,27 @@ def main():  # index:0-3
                 coll_stock = mon.mongo_collection(
                     client, 'stocks', f"stock{stock_id}")
                 for year in range(2010, 2021):
-                    for month in range(1, 13):
-                        m_retry = 0
-                        while m_retry < 3:
-                            try:
-                                url = f"""https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=html&date={str(year)}{str(month).zfill(2)}01&stockNo={stock_id}"""
-                                print(f"-- Crawler >>> {url}")
-                                documents = crawler.crawler(url)
-                                # print(documents)
+                    # 測試當年度是否有資料
+                    test_url = f"""https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=html&date={str(year)}1201&stockNo={stock_id}"""
+                    print(f"test stock {stock_id} in {year} exist ?")
+                    test_docs = crawler.crawler(test_url)
+                    if test_docs:
+                        print("=> Yes, exist!")
+                        for month in range(1, 13):
+                            url = f"""https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=html&date={str(year)}{str(month).zfill(2)}01&stockNo={stock_id}"""
+                            print(f"-- Crawler >>> {url}")
+                            documents = crawler.crawler(url)
+                            if documents:
                                 for item in documents:
                                     # 記錄爬取的股票資料並寫入mongo
                                     mon.insert_document(coll_stock, item)
                                 coll_stockInfo.update_one(
                                     {'_id': stock_id}, {'$set': {'monthStatus': year+month}})  # 當月爬完
-                                time.sleep(10)
-                                break
-                            except Exception as e:
-                                print(e)
-                                time.sleep(10)
-                                m_retry += 1
-                                if m_retry == 3:
-                                    wcsv.writeToCsv('CrawlerException', [
-                                                    stock_id, year, month])
-                                continue
+                                print(
+                                    f'stock: {stock_id} in {year}{month} insert done.')
+                            time.sleep(10)
+                            print(
+                                f'stock: {stock_id} in {year}{month} crawl done.')
                     coll_stockInfo.update_one(
                         {'_id': stock_id}, {'$set': {'yearStatus': year}})  # 當年爬完
 
