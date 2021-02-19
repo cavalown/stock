@@ -54,6 +54,15 @@ def updateTable(query, cursor, connect):
     print(count, "rows Updated successfully!")
 
 
+# insert tables
+def insertTable(query, cursor, connect):
+    # "INSERT INTO a_table (c1, c2, c3) VALUES(%s, %s, %s)", (v1, v2, v3)
+    cursor.execute(query)
+    connect.commit()  # <- We MUST commit to reflect the inserted data
+    cursor.close()
+    connect.close()
+    print(connect, "Insert successfully!")
+
 if __name__ == '__main__':
     cn_cconnect = postgres_connection('postgresCN')
     cn_cursor = make_cursor(cn_cconnect)
