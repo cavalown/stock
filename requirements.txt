@@ -1,5 +1,6 @@
 bs4
 flask
+flask-restful
 pymongo
 psycopg2-binary
 pandas
@@ -10,4 +11,3 @@ wheel
 requests
 lxml
 httplib2
-

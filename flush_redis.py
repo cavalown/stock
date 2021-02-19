@@ -1,4 +1,3 @@
-import re
 from myPackage import redisServer as red
 import os
 
