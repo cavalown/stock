@@ -3,7 +3,7 @@ from myPackage import mongoServer as mon
 
 def stockInfo():
     client = mon.mongo_connection('linode1', 'mongo')
-    coll_stockIndustry = mon.mongo_collection(
+    coll_stockIndustry = mon.mongo_collection(s
         client, 'stocks', 'stockIndustry')
     coll_stockInfo = mon.mongo_collection(client, 'stocks', 'stockInfo')
     for item in mon.find_all_mongo(coll_stockIndustry):
