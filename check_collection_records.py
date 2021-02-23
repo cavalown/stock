@@ -2,26 +2,16 @@ import csv
 from myPackage import crawler
 from myPackage import mongoServer as mon
 from myPackage import write_to_csv as wcsv
+from myPackage import all_stock_id as allStockID
 
 """
 check 202012 data of each stock collections is exist or not
 """
 
 
-def all_stock_id():
-    client = mon.mongo_connection('linode1', 'mongo')
-    collection_stock = mon.mongo_collection(client, 'stocks', "stockInfo")
-    contents = list(collection_stock.find({}, {'_id': 1}))
-    for item in contents:
-        stock_id = item['_id']
-        # print(stock_id)
-    print("amount of stocks:", len(contents))
-    return contents
-
-
 def check_records_exist():
     client = mon.mongo_connection('linode1', 'mongo')
-    for content in all_stock_id():
+    for content in allStockID.all_stock_id():
         stock_id = content['_id']
         # print(stock_id)
         coll_stock = mon.mongo_collection(client, 'stocks', f"stock{stock_id}")
