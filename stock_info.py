@@ -1,7 +1,7 @@
 from myPackage import mongoServer as mon
 
 
-def main():
+def stockInfo():
     client = mon.mongo_connection('linode1', 'mongo')
     coll_stockIndustry = mon.mongo_collection(
         client, 'stocks', 'stockIndustry')
@@ -23,4 +23,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    stockInfo()
