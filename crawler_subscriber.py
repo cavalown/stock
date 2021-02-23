@@ -48,7 +48,7 @@ def main():  # redis subscriber index:0-3
                                     # 記錄爬取的股票資料並寫入mongo
                                     mon.insert_document(coll_stock, item)
                                 coll_stockInfo.update_one(
-                                    {'_id': stock_id}, {'$set': {'monthStatus': year+month}})  # 當月爬完
+                                    {'_id': stock_id}, {'$set': {'monthStatus': str(year)+str(month).zfill(2)}})  # 當月爬完
                                 print(
                                     f'stock: {stock_id} in {year}{month} insert done.')
                             time.sleep(10)
@@ -60,7 +60,6 @@ def main():  # redis subscriber index:0-3
 
 if __name__ == '__main__':
     try:
-        # main(args.amount, args.index)
         main()
     except Exception as e:
         print(e)
