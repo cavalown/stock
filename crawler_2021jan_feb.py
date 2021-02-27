@@ -1,6 +1,4 @@
 import time
-
-from crawler_subscriber import main
 from myPackage import all_stock_id as allStockID
 from myPackage import crawler
 from myPackage import mongoServer as mon

@@ -1,7 +1,8 @@
 import psycopg2
-from myPackage import read_yaml as ryaml
 
-credential_path = 'credential/db.yaml'  
+import read_yaml as ryaml
+
+credential_path = 'credential/db.yaml'
 
 """
 steps:
@@ -11,31 +12,40 @@ steps:
 4. in the end, close the connection
 """
 
-
-def postgres_connection(machine, db_class):
+# connection
+def postgres_connection(machine, db_class, database):
     credential = ryaml.read_yaml(credential_path)
     db_info = credential[machine][db_class]
     host = db_info['host']
     port = db_info['port']
-    db = db_info['db']
+    # db = db_info['db']
     user = db_info['user']
     password = db_info['pswd']
-    connect = psycopg2.connect(database=db, user=user,
+    connect = psycopg2.connect(database=database, user=user,
                                password=password, host=host, port=port)
-    print("Connect to {} successfully!".format(db_name))
+    print(f"Connect to {database} successfully!")
     return connect
 
-
-def make_cursor(connect):
-    cursor = connect.cursor()
+# cursor
+def make_cursor(connection):
+    cursor = connection.cursor()
     print("And get cursor.")
     return cursor
 
-
+# close connection
 def close_connection(connection):
     connection.close()
-    print('{} is closed!'.format(connection))
+    print(f'{connection} is closed!')
 
+
+# create table db.schema.table and default schema : public
+def createTable(connection, query):
+    cursor = make_cursor(connection)
+    cursor.execute(query)
+    connection.commit()
+    close_connection(connection)
+    print(f"Create table successfully!")
+    
 
 # Read tables
 def readTable(query, cursor):
@@ -46,15 +56,16 @@ def readTable(query, cursor):
 
 
 # Update tables
-def updateTable(query, cursor, connect):
-    # query = """Update book set {} where {}""".format()
+def updateTable(query, cursor, connection):
+    # query = f"""Update book set {} where {}"""
     cursor.execute(query)
-    connect.commit()
+    connection.commit()
     count = cursor.rowcount
+    close_connection(connection)
     print(count, "rows Updated successfully!")
 
 
-# insert tables
+# insert table
 def insertTable(query, cursor, connect):
     # "INSERT INTO a_table (c1, c2, c3) VALUES(%s, %s, %s)", (v1, v2, v3)
     cursor.execute(query)
@@ -63,11 +74,8 @@ def insertTable(query, cursor, connect):
     connect.close()
     print(connect, "Insert successfully!")
 
+
 if __name__ == '__main__':
-    cn_cconnect = postgres_connection('postgresCN')
-    cn_cursor = make_cursor(cn_cconnect)
-    query = 'select public_path ,file_path from pat_attachment limit 10'
-    content = readTable(query, cn_cursor)
-    for i in content:
-        print(i)
-    close_connection(cn_cconnect)
+    connection = postgres_connection('linode1', 'postgres', 'stock')
+    cursor = make_cursor(connection)
+    print(cursor)
