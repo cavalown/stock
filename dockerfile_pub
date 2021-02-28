@@ -2,6 +2,8 @@ From python:3.8
 
 COPY . /app
 WORKDIR /app
+RUN mkdir /data
+
 
 RUN pip install -r requirements.txt
 
