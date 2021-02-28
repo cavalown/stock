@@ -32,7 +32,7 @@ def main():  # redis subscriber index:0-3
                 red.redis_delete_key(redisConnect, key)  # 取出url就從redis刪掉
                 coll_stock = mon.mongo_collection(
                     client, 'stocks', f"stock{stock_id}")
-                for year in range(2010, 2021):
+                for year in range(2010, 2022):
                     # 測試當年度是否有資料
                     test_url = f"""https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=html&date={str(year)}1201&stockNo={stock_id}"""
                     print(f"test stock {stock_id} in {year} exist ?")
