@@ -1,5 +1,6 @@
 import random
 import time
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -92,7 +93,7 @@ def crawler(url):
             time.sleep(10)
             crawler(url)
         print(f'Exception: {e}')
-        wcsv.writeToCsv('CrawlerException', [
+        wcsv.writeToCsv('./data/CrawlerException', [
             stock_id, year, month])
         documents = []
         return documents
