@@ -93,7 +93,7 @@ def crawler(url):
             time.sleep(10)
             crawler(url)
         print(f'Exception: {e}')
-        wcsv.writeToCsv('./data/CrawlerException', [
+        wcsv.writeToCsv('../data/CrawlerException', [
             stock_id, year, month])
         documents = []
         return documents
