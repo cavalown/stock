@@ -53,7 +53,7 @@ def main():
                 print("== All stock crawlering done ==")
                 break
         except Exception as e:
-            wcsv.writeToCsv("./data/redisException", [e])
+            wcsv.writeToCsv("./dataStore/redisException", [e])
             print(e)
 
 

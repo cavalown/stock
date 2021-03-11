@@ -55,7 +55,7 @@ def crawler_daily():
                     # sent notify with googlebot
                     goo.main('stock_crawler',
                              f"{stock_id}, {year,month,day} Wrong: {e}")
-                    wcsv.writeToCsv(f'./data/DailyCrawlerException_{today}', [
+                    wcsv.writeToCsv(f'./dataStore/DailyCrawlerException_{today}', [
                                     stock_id, year, month, day])
                 continue
 
