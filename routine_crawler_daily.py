@@ -8,7 +8,7 @@ from myPackage import stock_googlebot as goo
 from myPackage import write_to_csv as wcsv
 
 """
-crontab everyday 16:00
+crontab everyday 16:30
 """
 
 
@@ -23,7 +23,7 @@ def crawler_daily():
     coll_stockInfo = mon.mongo_collection(client, 'stocks', 'stockInfo')
     coll_stockInfo.update_many({}, {'$set': {'dailyStatus': 0}})
     # today
-    today = datetime.date.today()-datetime.timedelta(1)
+    today = datetime.date.today() #-datetime.timedelta(1)
     year = today.strftime("%Y")
     month = today.strftime("%m")
     day = today.strftime("%d")
@@ -41,7 +41,7 @@ def crawler_daily():
                 for item in contents:
                     # daily record to mongo
                     mon.insert_document(coll_stock, item)
-                # crawlering and writing to mongo done, set daily status as 1
+                # crawlering and writing to mongo done, set daily status as datetime
                 coll_stockInfo.update_one(
                     {'_id': stock_id}, {'$set': {'dailyStatus': f"{year+month+day}"}})
                 counts += 1

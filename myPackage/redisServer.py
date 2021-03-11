@@ -1,6 +1,9 @@
 import re
+
 import redis
+
 from myPackage import read_yaml as ryaml
+# import read_yaml as ryaml
 
 credential_path = 'credential/db.yaml'
 
@@ -15,7 +18,8 @@ def redis_connection(machine, db_class, db):
     host = db_info['host']
     port = db_info['port']
     password = db_info['pswd']
-    connection = redis.StrictRedis(host=host, port=6379, password=password, db=db, decode_responses=True)
+    connection = redis.StrictRedis(
+        host=host, port=6379, password=password, db=db, decode_responses=True)
     return connection
 
 
@@ -40,6 +44,7 @@ def redis_get_all_kv(connection):
     contents = connection.keys()
     return contents
 
+
 def flush_all_in_one_db(connection):
     connection.flushall()
     print('Flush done.')
@@ -48,5 +53,7 @@ def flush_all_in_one_db(connection):
 
 if __name__ == '__main__':
     redisConnection = redis_connection('linode1', 'redis', db=0)
-    redisConnection.flushall() # delete all
-
+    # redisConnection.flushall() # delete all
+    contents = redis_get_all_kv(connection=redisConnection)
+    for i in contents:
+        print(i)

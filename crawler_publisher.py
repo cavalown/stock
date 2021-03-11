@@ -32,13 +32,16 @@ def main():
                         coll_stockInfo.update({'_id': stock_id}, {
                             '$set': {'crawlerStatus': 1}})
                     # 表示已經從redis刪掉但還沒爬蟲好的stock_id
-                    elif coll_stockInfo.find({'crawlerStatus': {'$ne': 3}}, {'_id': 1}).count() != 0:
-                        content = coll_stockInfo.find(
-                            {'crawlerStatus': {'$ne': 2}}, {'_id': 1}).limit(1)
-                        stock_id = content[0]['_id']
-                        print(f"{key} disapear >>> set {stock_id}")
-                        # 再丟上去一次redis
-                        red.redis_set_key_value(redisConnect, key, stock_id)
+                    # elif coll_stockInfo.find({'crawlerStatus': 2}, {'_id': 1}).count() != 0:
+                    #     coll_stockInfo.update({'crawlerStatus': {'$ne': 3}}, {
+                    #                           '$set': {'crawlerStatus': 0}})
+                    #     main()
+                        # content = coll_stockInfo.find(
+                        #     {'crawlerStatus': {'$ne': 1}}, {'_id': 1}).limit(1)
+                        # stock_id = content[0]['_id']
+                        # print(f"{key} disapear >>> set {stock_id}")
+                        # # 再丟上去一次redis
+                        # red.redis_set_key_value(redisConnect, key, stock_id)
                     else:
                         wcsv.writeToCsv(
                             './data/publisherStatus', ['all stock ids have published on redis', datetime.datetime.now()])
