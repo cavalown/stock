@@ -1,9 +1,10 @@
 import pymongo
 from pymongo.errors import DuplicateKeyError
+
 # from myPackage import read_yaml as ryaml
 import myPackage.read_yaml as ryaml
 
-credential_path = 'credential/db.yaml'
+credential_path = '../../credential/db.yaml'
 
 '''
 mongodb://username:password@host:port/dbname

@@ -1,8 +1,11 @@
 from json import dumps
+
 from httplib2 import Http
+
 from myPackage import read_yaml as ryaml
 
-credential_path = 'credential/google_bot.yaml'
+credential_path = '../../credential/google_bot.yaml'
+
 
 def main(bot_name, message):
     """Hangouts Chat incoming webhook quickstart."""

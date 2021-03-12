@@ -3,9 +3,10 @@ import re
 import redis
 
 from myPackage import read_yaml as ryaml
+
 # import read_yaml as ryaml
 
-credential_path = 'credential/db.yaml'
+credential_path = '../../credential/db.yaml'
 
 """
 redis has 16 dbs: 0-15
