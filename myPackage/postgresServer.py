@@ -73,13 +73,14 @@ def insertTable(connection, cursor, query, exceptionfile):
         cursor.execute(query)
         connection.commit()  # <- We MUST commit to reflect the inserted data
         print(connection, "Insert successfully!")
+        connection.commit()
     except psycopg2.IntegrityError as e:
         connection.rollback()
     except Exception as e:
         wcsv.writeToCsv(
-            './dataStore/pos_insert_exception_{exceptionfile}', [e])
+            f'./dataStore/pos_insert_exception_{exceptionfile}', [e])
         print(e)
-    connection.commit()
+        connection.rollback()
 
 
 # check if table exist
