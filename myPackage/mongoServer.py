@@ -108,6 +108,11 @@ def find_some_fields_mongo(collection, columns_list):
 #         {'$group': {'_id': "$fName", 'avg': {'$avg': '$price'}}},]
 #     return
 
+# close connection
+def close_connection(client):
+    client.close()
+    print(f'{client} is closed!')
+
 
 if __name__ == '__main__':
     mongo_client = mongo_connection('linode1', 'mongo')
