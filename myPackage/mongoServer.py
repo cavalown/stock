@@ -4,7 +4,8 @@ from pymongo.errors import DuplicateKeyError
 # from myPackage import read_yaml as ryaml
 import myPackage.read_yaml as ryaml
 
-credential_path = '../../credential/db.yaml'
+credential_path = '/Users/huangyiling/Github/credential/db.yaml'  # Mac
+# credential_path = '/home/cavalown/credential/db.yaml' # linode
 
 '''
 mongodb://username:password@host:port/dbname

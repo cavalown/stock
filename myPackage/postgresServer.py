@@ -5,7 +5,8 @@ from myPackage import write_to_csv as wcsv
 
 # import read_yaml as ryaml
 
-credential_path = '../../credential/db.yaml'
+credential_path = '/Users/huangyiling/Github/credential/db.yaml'  # Mac
+# credential_path = '/home/cavalown/credential/db.yaml' # linode
 
 """
 steps:

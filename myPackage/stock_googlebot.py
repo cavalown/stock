@@ -4,7 +4,8 @@ from httplib2 import Http
 
 from myPackage import read_yaml as ryaml
 
-credential_path = '../../credential/google_bot.yaml'
+credential_path = '/Users/huangyiling/Github/credential/google_bot.yaml'  # Mac
+# credential_path = '/home/cavalown/credential/google_bot.yaml' # linode
 
 
 def main(bot_name, message):
